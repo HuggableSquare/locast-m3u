@@ -1,0 +1,7 @@
+hostname: example.com
+credentials:
+  username: saintnick@example.com
+  password: giftguy1225
+coords:
+  lat: 90.0000
+  lon: 0.0000

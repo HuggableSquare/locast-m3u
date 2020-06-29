@@ -1,0 +1,21 @@
+name: locast-m3u/
+version: 0.1.0
+
+authors:
+  - Nick/Nelson <huggablesquare@gmail.com>
+
+targets:
+  locast-m3u/:
+    main: src/locast-m3u/server.cr
+
+crystal: 0.30.1
+
+license: MIT
+
+dependencies:
+  kemal:
+    github: kemalcr/kemal
+  cossack:
+    github: crystal-community/cossack
+  jwt:
+    github: crystal-community/jwt
