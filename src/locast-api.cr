@@ -1,6 +1,5 @@
-require "cossack"
 require "jwt"
-require "http/params"
+require "http"
 require "./config"
 
 module Locast

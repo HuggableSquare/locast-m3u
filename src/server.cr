@@ -1,5 +1,4 @@
 require "kemal"
-require "cossack"
 require "xml"
 require "./locast-api"
 require "./config"
