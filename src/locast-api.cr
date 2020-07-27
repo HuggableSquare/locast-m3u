@@ -5,44 +5,49 @@ require "./config"
 
 module Locast
   class Listing
-    JSON.mapping(
-      startTime: UInt64,
-      duration: UInt64,
-      title: String,
-      episodeTitle: String?,
-      description: String?,
-      episodeNumber: UInt32?,
-      seasonNumber: UInt32?,
-      preferredImage: String,
-      rating: String?
-    )
+    include JSON::Serializable
+
+    property startTime : UInt64
+    property duration : UInt64
+    property title : String
+    property episodeTitle : String?
+    property description : String?
+    property episodeNumber : UInt32?
+    property seasonNumber : UInt32?
+    property preferredImage : String
+    property rating : String?
+    property releaseDate : Int64?
+    property airdate : Int64?
+    property isNew : Bool?
+    property entityType : String
+    property genres : String?
+    property showType : String
+    property videoProperties : String?
   end
 
   class Station
-    JSON.mapping(
-      callSign: String,
-      id: UInt32,
-      logoUrl: String,
-      name: String,
-      stationId: String,
-      streamUrl: String?,
-      listings: Array(Locast::Listing)?
-    )
+    include JSON::Serializable
+
+    property callSign : String
+    property id : UInt64
+    property logoUrl : String
+    property name : String
+    property stationId : String
+    property streamUrl : String?
+    property listings : Array(Locast::Listing)?
   end
 
   class API
     @token = ""
     @dma = ""
-    @cossack = Cossack::Client.new "https://api.locastnet.org/api"
+    @http = HTTP::Client.new URI.parse("https://api.locastnet.org")
 
     @config = Config.new
 
     private def login
       body = @config.credentials
       params = HTTP::Params.encode({ "client_id" => "" })
-      response = @cossack.post "/user/login?#{params.to_s}", body.to_json do |client|
-        client.headers["Content-Type"] = "application/json"
-      end
+      response = @http.post "/api/user/login?" + params, headers: HTTP::Headers { "Content-Type" => "application/json" }
       login = JSON.parse response.body
       puts response.body
       login["token"].as_s
@@ -71,9 +76,7 @@ module Locast
     private def get_dma
       if @dma.empty?
         lat, lon = self.get_coords
-        response = @cossack.get "/watch/dma/#{lat}/#{lon}" do |client|
-          client.headers["Content-Type"] = "application/json"
-        end
+        response = @http.get "/api/watch/dma/#{lat}/#{lon}", headers: HTTP::Headers { "Content-Type" => "application/json" }
         dma = JSON.parse response.body
         @dma = dma["DMA"].as_s
       end
@@ -85,7 +88,7 @@ module Locast
       dma = self.get_dma
       start = Time.utc.at_beginning_of_hour
       params = HTTP::Params.encode({ "startTime" => start.to_rfc3339 })
-      response = @cossack.get "/watch/epg/#{dma}?#{params.to_s}"
+      response = @http.get "/api/watch/epg/#{dma}?" + params
 
       Array(Locast::Station).from_json response.body
     end
@@ -94,9 +97,7 @@ module Locast
       token = self.get_token
       lat, lon = self.get_coords
 
-      response = @cossack.get "/watch/station/#{id}/#{lat}/#{lon}" do |client|
-        client.headers["Authorization"] = "Bearer #{token}"
-      end
+      response = @http.get "/api/watch/station/#{id}/#{lat}/#{lon}", headers: HTTP::Headers { "Authorization" => "Bearer #{token}" }
       
       puts response.body
 

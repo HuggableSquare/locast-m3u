@@ -1,11 +1,11 @@
 require "yaml"
 
 class Config
-	YAML.mapping(
-		hostname: String,
-		credentials: Hash(String, String),
-		coords: Hash(String, Float64)
-	)
+	include YAML::Serializable
+
+	property hostname : String
+	property credentials : Hash(String, String)
+	property coords : Hash(String, Float64)
 
 	def self.new
 		File.open("config.yml") do |file|

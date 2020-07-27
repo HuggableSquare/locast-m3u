@@ -1,12 +1,8 @@
 version: 2.0
 shards:
-  cossack:
-    git: https://github.com/crystal-community/cossack.git
-    version: 0.1.4
-
   exception_page:
     git: https://github.com/crystal-loot/exception_page.git
-    version: 0.1.2
+    version: 0.1.4
 
   jwt:
     git: https://github.com/crystal-community/jwt.git
@@ -14,7 +10,7 @@ shards:
 
   kemal:
     git: https://github.com/kemalcr/kemal.git
-    version: 0.26.0
+    version: 0.26.1+git.commit.2e749a298791bfc708d7eb82e07b591d8d7bac1d
 
   kilt:
     git: https://github.com/jeromegn/kilt.git
