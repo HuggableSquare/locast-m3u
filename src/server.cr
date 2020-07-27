@@ -12,7 +12,7 @@ get "/playlist" do
   m3u = ["#EXTM3U"]
   stations = locast_api.get_stations
   stations.each do |station|
-    m3u << "#EXTINF:-1 tvg-name=\"#{station.callSign}\" tvg-logo=\"#{station.logoUrl}\",#{station.callSign}"
+    m3u << "#EXTINF:-1 tvg-name=\"#{station.callSign}\" tvg-logo=\"#{station.logoUrl}\" tvg-id=\"#{station.id}\",#{station.callSign}"
     m3u << "#{address}/station/#{station.id}"
   end
   m3u.join "\n"
