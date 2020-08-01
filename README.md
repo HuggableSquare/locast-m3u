@@ -1,27 +1,20 @@
-# locast-m3u/
+# locast-m3u
 
-TODO: Write a description here
+The ability to use locast as a normal IPTV provider, built for use with xTeVe and Plex  
 
 ## Installation
 
-TODO: Write installation instructions here
+At some point I want to publish binaries, but until then follow the development instructions to get the project running
 
 ## Usage
 
-TODO: Write usage instructions here
+A config.yml file will need to be created and filled out, an example is provided as config.yml.example, which can be used as a template for the settings that need to be filled in.
 
 ## Development
 
-TODO: Write development instructions here
-
-## Contributing
-
-1. Fork it (<https://github.com/your-github-user/locast-m3u//fork>)
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
-
-## Contributors
-
-- [Nick/Nelson](https://github.com/your-github-user) - creator and maintainer
+```
+git clone https://github.com/huggablesquare/locast-m3u.git
+cd locast-m3u
+shards install
+crystal run src/server.cr
+```
