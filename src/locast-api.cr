@@ -98,8 +98,6 @@ module Locast
 
       response = @http.get "/api/watch/station/#{id}/#{lat}/#{lon}", headers: HTTP::Headers { "Authorization" => "Bearer #{token}" }
       
-      puts response.body
-
       Locast::Station.from_json response.body
     end
   end
